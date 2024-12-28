@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Path to Your Question!</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      background-color: #fff1f3;
+      color: #444;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: none;
+      padding: 20px;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    .visible {
+      display: block;
+    }
+
+    button {
+      margin: 10px;
+      background: #ff85a1;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #ff4d6a;
+    }
+
+    input[type="text"], input[type="number"] {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px 0;
+      width: 80%;
+      max-width: 300px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+    }
+
+    .final-message {
+      animation: glow 2s infinite alternate;
+      font-size: 24px;
+      font-weight: bold;
+      color: #ff4d6a;
+    }
+
+    @keyframes glow {
+      0% { text-shadow: 0 0 10px #ff85a1; }
+      100% { text-shadow: 0 0 20px #ff4d6a; }
+    }
+
+    .hidden-text {
+      display: none;
+    }
+
+    .egg {
+      font-size: 100px;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+    .egg.hidden {
+      display: none;
+    }
+
+    /* Final message animation */
+    .final-official-message {
+      font-size: 36px;
+      font-weight: bold;
+      color: #ff4d6a;
+      animation: glowingText 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowingText {
+      0% {
+        color: #ff4d6a;
+        text-shadow: 0 0 10px #ff4d6a, 0 0 20px #ff4d6a, 0 0 30px #ff4d6a;
+      }
+      100% {
+        color: #ff85a1;
+        text-shadow: 0 0 10px #ff85a1, 0 0 20px #ff85a1, 0 0 30px #ff85a1;
+      }
+    }
+
+    /* Falling stickers animation */
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .sticker {
+      position: absolute;
+      top: 0;
+      font-size: 24px;
+      animation: fall linear infinite;
+    }
+
+    .sticker:nth-child(1) { left: 10%; animation-duration: 4s; }
+    .sticker:nth-child(2) { left: 30%; animation-duration: 5s; }
+    .sticker:nth-child(3) { left: 50%; animation-duration: 6s; }
+    .sticker:nth-child(4) { left: 70%; animation-duration: 7s; }
+    .sticker:nth-child(5) { left: 90%; animation-duration: 4.5s; }
+
+    /* Bear animation */
+    #bear-animation {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 50;
+    }
+
+    #bear {
+      font-size: 100px;
+      animation: bear-animate 1.5s infinite ease-in-out;
+    }
+
+    @keyframes bear-animate {
+      0% {
+        transform: scale(1) rotate(0);
+      }
+      50% {
+        transform: scale(1.2) rotate(5deg);
+      }
+      100% {
+        transform: scale(1) rotate(0);
+      }
+  </style>
+</head>
+<body>
+  <!-- Slide 1 -->
+  <div id="slide1" class="container visible">
+    <h1>The Path to Your Question!</h1>
+    <p>Are you ready to spend a lifetime with this person?</p>
+    <p>If yes, then play this game. If no, skip this game.</p>
+    <button onclick="showSlide(2)">START</button>
+  </div>
+
+  <!-- Slide 2 -->
+  <div id="slide2" class="container">
+    <h1>Before we start the game, how do you feel?🤔</h1>
+    <button onclick="showSlide(3)">Excited🎉</button>
+    <button onclick="showSlide(3)">Nervous😰</button>
+    <button onclick="showSlide(3)">Combination of both🥰</button>
+  </div>
+
+  <!-- Slide 3 -->
+  <div id="slide3" class="container">
+    <h1>Don’t be too excited or nervous!😊</h1>
+    <p>The answer is meant for you! I guess your curiosity is eating you. Let’s proceed to the first game!</p>
+    <button onclick="showSlide(4)">Next</button>
+  </div>
+
+  <!-- Slide 4 -->
+  <div id="slide4" class="container">
+    <h1>Game 1: Collect the Clues!🎯</h1>
+    <p>The first place we met:</p>
+    <input id="q1" type="text" placeholder="Enter your answer">
+    <p>The date we had our first chat message (date only):</p>
+    <input id="q2" type="number" placeholder="Enter the date">
+    <p>This song reminds us of ‘us’ (Clue: my favorite song):</p>
+    <input id="q3" type="text" placeholder="Enter the song name">
+    <p>Favorite thing I love doing in our quality time (Clue: s____p):</p>
+    <input id="q4" type="text" placeholder="Enter the word">
+    <p>Today's date:</p>
+    <input id="q5" type="number" placeholder="Enter today's date">
+    <button onclick="checkGame1()">Submit</button>
+  </div>
+
+  <!-- Slide 5 -->
+  <div id="slide5" class="container">
+    <h1>That was just a piece of details that we had! Have you refreshed about the memories that we have had? 🥰</h1>
+    <p>If yes, then let's proceed to another game! If no, then maybe you should start reminiscing about it again.</p>
+    <button onclick="showSlide(6)">Yes, next game!</button>
+    <button onclick="showSlide(4)">No, retry game 1!</button>
+  </div>
+
+  <!-- Slide 6 -->
+  <div id="slide6" class="container">
+    <h1>Feelings That I Have Right Now! 💖</h1>
+    <p>Answer carefully to unlock the message in my heart!</p>
+    <button onclick="showSlide(7)">Proceed</button>
+  </div>
+
+  <!-- Slide 7 -->
+  <div id="slide7" class="container">
+    <h1>Game 2: What I Feel for You</h1>
+    <p>What’s the 9th letter of the alphabet?</p>
+    <input id="puzzle1" type="text" placeholder="Enter letter">
+    <p>One thing I feel for you, stronger than anything else. (Clue: the 4 on 143)</p>
+    <input id="puzzle2" type="text" placeholder="Enter the word">
+    <p>Who am I speaking to right now? ooops don't answer me, it's y___</p>
+    <input id="puzzle3" type="text" placeholder="Enter the word">
+    <p>Most cringe nickname for me that I used to call you now:</p>
+    <input id="puzzle4" type="text" placeholder="Enter nickname">
+    <button onclick="checkGame2()">Submit</button>
+  </div>
+
+  <!-- Slide 8 -->
+  <div id="slide8" class="container">
+    <h1>🎉 Surprise! 🎉 </h1>
+    <p>These answers were more than words—they spell what’s in my heart:</p>
+    <h2 class="final-message">I LOVE YOU BABY!</h2>
+    <button onclick="showSlide(9)">Next</button>
+  </div>
+
+  <!-- Slide 9 -->
+  <div id="slide9" class="container">
+    <h1>Choose Your Path 🌟</h1>
+    <p>This game leads to the exciting part!</p>
+    <button onclick="showSlide(10)">Path A: Keep searching 🔍</button>
+    <button onclick="showSlide(11)">Path B: Take this road for the exciting part⏩</button>
+  </div>
+
+  <!-- Slide 10 -->
+  <div id="slide10" class="container">
+    <h1>Path A: Keep Searching</h1>
+    <p>Take some time to reflect and revisit the answers you've provided. Every moment matters.✨</p>
+    <button onclick="showSlide(14)">Next Challenge</button>
+  </div>
+
+  <!-- Slide 11 -->
+  <div id="slide11" class="container">
+    <h1>Path B: Take This Road</h1>
+    <p>Your confidence says it all! Are you ready for the next part of the journey?</p>
+    <button onclick="showSlide(12)">Proceed</button>
+  </div>
+
+  <!-- Slide 12 -->
+  <div id="slide12" class="container">
+    <h1>Can you guess what's on the last slide?</h1>
+    <button onclick="showSlide(13)">A: Another game?🤔💭</button>
+    <button onclick="showSlide(13)">B: A surprise?😲</button>
+    <button onclick="showSlide(13)">C: A goodbye message?😔</button>
+  </div>
+
+  <!-- Slide 13 -->
+  <div id="slide13" class="container">
+    <h1>Well, well, well... let's save up your guess! Now, crack the egg!</h1>
+    <div id="wholeEgg" class="egg" onclick="crackEgg()">🥚</div>
+    <div id="crackedEgg" class="egg hidden">🐣</div>
+    <div id="hiddenText" class="hidden-text">
+      <p>Your Final Challenge Awaits!</p>
+      <button onclick="showSlide(14)">Next</button>
+    </div>
+  </div>
+
+  <!-- Slide 14 -->
+<div id="slide14" class="container">
+  <h1>Your Final Challenge Awaits!</h1>
+  <p>Will you promise to walk beside me, through every joy and every challenge, and cherish each moment as we build our future together?</p>
+  <button onclick="finalYes()">Yes, I will, with all my heart! 💖</button>
+  <button onclick="finalNo()">No, not yet.</button>
+</div>
+
+  <!-- Slide 15: Congratulations -->
+<div id="slide15" class="container">
+  <div class="sticker">❀</div>
+  <div class="sticker">✩</div>
+  <div class="sticker">❁</div>
+  <div class="sticker">♡</div>
+
+    <div id="bear-animation">
+      <!-- Bear image (🧸) -->
+      <span id="bear">🧸</span>
+    </div>
+  <h1>Congratulations!⋆˖𑁍ࠬܓ</h1>
+  <p>You answered YES. That’s why it’s a YES for me too! ♡</p>
+  <p class="final-official-message">We're Finally Official!</p>
+  <button onclick="showSlide(1)">Restart Game</button>
+</div>
+
+  <!-- Slide: Retry -->
+<div id="retry" class="container">
+  <h1>No problem, let's take some time! 🕰️</h1>
+  <p>When you're ready, come back, and we'll start again! 😊</p>
+  <button onclick="showSlide(1)">Retry</button>
+</div>
+
+<script>
+  function showSlide(slideNumber) {
+    document.querySelectorAll(".container").forEach(slide => slide.classList.remove("visible"));
+    document.getElementById(`slide${slideNumber}`).classList.add("visible");
+  }
+
+  function checkGame1() {
+    const answers = {
+      q1: document.getElementById('q1').value.trim().toLowerCase(),
+      q2: document.getElementById('q2').value.trim(),
+      q3: document.getElementById('q3').value.trim().toLowerCase(),
+      q4: document.getElementById('q4').value.trim().toLowerCase(),
+      q5: document.getElementById('q5').value.trim()
+    };
+
+    if (answers.q1 && answers.q2 && answers.q3 && answers.q4 && answers.q5) {
+      showSlide(5);
+    } else {
+      alert('Please answer all the questions.');
+    }
+  }
+
+  function checkGame2() {
+    const answers = {
+      puzzle1: document.getElementById('puzzle1').value.trim().toLowerCase(),
+      puzzle2: document.getElementById('puzzle2').value.trim().toLowerCase(),
+      puzzle3: document.getElementById('puzzle3').value.trim().toLowerCase(),
+      puzzle4: document.getElementById('puzzle4').value.trim().toLowerCase()
+    };
+
+    if (answers.puzzle1 === 'i' && answers.puzzle2 === 'love' && answers.puzzle3 === 'you' && answers.puzzle4) {
+      showSlide(8);
+    } else {
+      alert('Incorrect answers. Please try again.');
+    }
+  }
+
+  function crackEgg() {
+    document.getElementById("wholeEgg").classList.add("hidden");
+    document.getElementById("crackedEgg").classList.remove("hidden");
+    document.getElementById("hiddenText").style.display = "block";
+  }
+
+  function finalYes() {
+    showSlide(15); // Transition to "Congratulations" slide
+  }
+
+  function finalNo() {
+    showSlide("retry"); // Transition to Retry slide
+  }
+
+  // Remove unnecessary MutationObserver logic
+</script>
+  </script>
+</body>
+</html>
